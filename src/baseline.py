@@ -51,6 +51,16 @@ def compute_baseline(customer_id: str, df: pd.DataFrame, evaluation_window_days:
         typical_channel = baseline_df['channel'].mode()[0]
     else:
         typical_channel = "Unknown"
+    
+    # Avg transactions per week from baseline period
+    baseline_days = (baseline_df['datetime'].max() - baseline_df['datetime'].min()).days + 1
+    if baseline_days > 0:
+        avg_tx_per_week = round((len(baseline_df) / baseline_days) * 7, 1)
+    else:
+        avg_tx_per_week = len(baseline_df)
+        
+    # Typical single transaction median (same as median_amount but named clearly)
+    typical_transaction = round(baseline_df['amount'].median(), 2) if pd.notnull(baseline_df['amount'].median()) else 0.0
         
     return {
         "median_amount": round(median_amount, 2) if pd.notnull(median_amount) else 0.0,
@@ -60,6 +70,8 @@ def compute_baseline(customer_id: str, df: pd.DataFrame, evaluation_window_days:
         "max_hour": int(max_hour),
         "known_payees": known_payees,
         "typical_channel": typical_channel,
+        "avg_tx_per_week": avg_tx_per_week,
+        "typical_transaction": typical_transaction,
         "evaluation_df": evaluation_df
     }
 

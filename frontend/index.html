@@ -21,46 +21,164 @@
             <p class="subtitle">Viewing as Investigator</p>
         </header>
         
-        <div class="controls">
-            <select id="customer-select">
-                <option value="" disabled selected>Select a customer to investigate</option>
-            </select>
-            <button id="investigate-btn" disabled>Investigate</button>
+        <div id="command-center">
+            <div class="dashboard-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="stat-card">
+                    <div class="stat-label">Customers Reviewed</div>
+                    <div class="stat-value" id="stat-reviewed">-</div>
+                </div>
+                <div class="stat-card warning-stat">
+                    <div class="stat-label">Attention Required</div>
+                    <div class="stat-value" id="stat-attention">-</div>
+                </div>
+                <div class="stat-card success-stat">
+                    <div class="stat-label">No Attention Required</div>
+                    <div class="stat-value" id="stat-clean">-</div>
+                </div>
+                <div class="stat-card danger-stat">
+                    <div class="stat-label">Flagged Transactions</div>
+                    <div class="stat-value" id="stat-flagged">-</div>
+                </div>
+            </div>
+
+            <div class="queue-section">
+                <h2>Customers Requiring Attention</h2>
+                <div class="table-container">
+                    <table id="attention-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Flagged Txs</th>
+                                <th>Main Signals</th>
+                                <th>Deviation</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attention-body">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="queue-section">
+                <h2>Customers With No Attention Required</h2>
+                <div class="table-container">
+                    <table id="clean-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clean-body">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        
-        <div id="loading-state" class="hidden">
-            <div class="spinner"></div>
-            <p>Analyzing transaction patterns...</p>
-        </div>
-        
-        <div id="report-container" class="hidden">
-            <div id="status-badge" class="badge"></div>
+
+        <div id="investigation-view" class="hidden">
+            <button id="back-btn" class="secondary-btn">← Back to Command Center</button>
+            <div class="investigation-header">
+                <h2 id="investigation-title">Investigating Customer</h2>
+            </div>
+
+            <div id="loading-state" class="hidden">
+                <div class="spinner"></div>
+                <p>Analyzing transaction patterns...</p>
+            </div>
             
-            <div class="report-grid">
-                <div class="card" id="baseline-card">
-                    <h2>Customer Profile Baseline</h2>
-                    <div class="baseline-stats">
-                        <div class="stat"><span class="label">Typical Transfer</span><span id="base-transfer" class="value"></span></div>
-                        <div class="stat"><span class="label">Active Hours</span><span id="base-hours" class="value"></span></div>
-                        <div class="stat"><span class="label">Typical Channel</span><span id="base-channel" class="value"></span></div>
+            <div id="report-container" class="hidden">
+                <div id="status-badge" class="badge"></div>
+
+                <!-- Behavioral Fingerprint -->
+                <div class="card fingerprint-card" id="fingerprint-card">
+                    <h2>Customer Behavioral Fingerprint</h2>
+                    <div class="fingerprint-grid">
+                        <div class="fp-row">
+                            <span class="fp-label">Typical transaction</span>
+                            <span class="fp-value" id="fp-typical-tx">—</span>
+                        </div>
+                        <div class="fp-row">
+                            <span class="fp-label">Typical transfer range</span>
+                            <span class="fp-value" id="fp-transfer">—</span>
+                        </div>
+                        <div class="fp-row">
+                            <span class="fp-label">Usual transaction time</span>
+                            <span class="fp-value" id="fp-hours">—</span>
+                        </div>
+                        <div class="fp-row">
+                            <span class="fp-label">Known payees</span>
+                            <span class="fp-value" id="fp-payees">—</span>
+                        </div>
+                        <div class="fp-row">
+                            <span class="fp-label">Avg transactions / week</span>
+                            <span class="fp-value" id="fp-avg-tx">—</span>
+                        </div>
+                        <div class="fp-row">
+                            <span class="fp-label">Preferred channel</span>
+                            <span class="fp-value" id="fp-channel">—</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="card" id="llm-card">
-                    <h2>AI Investigation Summary</h2>
-                    <p id="narrative-text"></p>
-                    <div class="recommendation">
-                        <strong>Check First:</strong> <span id="check-first-text"></span>
+                <div class="report-grid">
+                    <div class="card" id="baseline-card">
+                        <h2>Customer Profile Baseline</h2>
+                        <div class="baseline-stats">
+                            <div class="stat"><span class="label">Typical Transfer</span><span id="base-transfer" class="value"></span></div>
+                            <div class="stat"><span class="label">Active Hours</span><span id="base-hours" class="value"></span></div>
+                            <div class="stat"><span class="label">Typical Channel</span><span id="base-channel" class="value"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" id="llm-card">
+                        <h2>AI Investigation Summary</h2>
+                        <p id="narrative-text"></p>
+                        <div class="recommendation">
+                            <strong>Check First:</strong> <span id="check-first-text"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div id="findings-section">
-                <!-- Findings will be dynamically injected here -->
-            </div>
-            
-            <div id="connections-section">
-                <!-- Connections will be dynamically injected here -->
+                
+                <div id="findings-section">
+                    <!-- Findings will be dynamically injected here -->
+                </div>
+                
+                <div id="connections-section">
+                    <!-- Connections will be dynamically injected here -->
+                </div>
+
+                <!-- Investigation Timeline -->
+                <div id="timeline-section" style="margin-top: 40px;">
+                    <h3 class="section-title">Investigation Timeline</h3>
+                    <div id="timeline-container">
+                        <!-- Dynamic timeline nodes injected here -->
+                    </div>
+                </div>
+
+                <div id="raw-transactions-section" style="margin-top: 32px;">
+                    <h3>Raw Transactions</h3>
+                    <div class="table-container">
+                        <table id="raw-tx-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Payee</th>
+                                    <th>Channel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="raw-tx-body">
+                                <!-- Dynamic Rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
