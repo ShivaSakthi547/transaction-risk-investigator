@@ -1,0 +1,37 @@
+[
+    {
+        "customer_id": "C001",
+        "name": "Alice Smith",
+        "account_opened_date": "2023-01-15"
+    },
+    {
+        "customer_id": "C002",
+        "name": "Bob Jones",
+        "account_opened_date": "2022-11-05"
+    },
+    {
+        "customer_id": "C003",
+        "name": "Charlie Brown",
+        "account_opened_date": "2024-02-20"
+    },
+    {
+        "customer_id": "C004",
+        "name": "Diana Prince",
+        "account_opened_date": "2021-08-10"
+    },
+    {
+        "customer_id": "C005",
+        "name": "Ethan Hunt",
+        "account_opened_date": "2023-06-01"
+    },
+    {
+        "customer_id": "C006",
+        "name": "Fiona Gallagher",
+        "account_opened_date": "2020-03-12"
+    },
+    {
+        "customer_id": "C007",
+        "name": "George Miller",
+        "account_opened_date": "2023-09-30"
+    }
+]
