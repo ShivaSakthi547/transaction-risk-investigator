@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusTiQ Transaction Risk Investigator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="network-node" style="top: 20%; left: 10%;"></div>
+        <div class="network-node" style="top: 70%; left: 80%;"></div>
+        <div class="network-node" style="top: 40%; left: 60%;"></div>
+        <div class="network-line" style="top: 30%; left: 15%; width: 200px; transform: rotate(15deg);"></div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>Transaction Risk Investigator</h1>
+            <p class="subtitle">Viewing as Investigator</p>
+        </header>
+        
+        <div class="controls">
+            <select id="customer-select">
+                <option value="" disabled selected>Select a customer to investigate</option>
+            </select>
+            <button id="investigate-btn" disabled>Investigate</button>
+        </div>
+        
+        <div id="loading-state" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing transaction patterns...</p>
+        </div>
+        
+        <div id="report-container" class="hidden">
+            <div id="status-badge" class="badge"></div>
+            
+            <div class="report-grid">
+                <div class="card" id="baseline-card">
+                    <h2>Customer Profile Baseline</h2>
+                    <div class="baseline-stats">
+                        <div class="stat"><span class="label">Typical Transfer</span><span id="base-transfer" class="value"></span></div>
+                        <div class="stat"><span class="label">Active Hours</span><span id="base-hours" class="value"></span></div>
+                        <div class="stat"><span class="label">Typical Channel</span><span id="base-channel" class="value"></span></div>
+                    </div>
+                </div>
+                
+                <div class="card" id="llm-card">
+                    <h2>AI Investigation Summary</h2>
+                    <p id="narrative-text"></p>
+                    <div class="recommendation">
+                        <strong>Check First:</strong> <span id="check-first-text"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="findings-section">
+                <!-- Findings will be dynamically injected here -->
+            </div>
+            
+            <div id="connections-section">
+                <!-- Connections will be dynamically injected here -->
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
